@@ -1,6 +1,6 @@
 {
   "name": "wdio-robonut-service",
-  "version": "0.1.4",
+  "version": "0.2.1",
   "description": "Robot WebdriverIO cross platform service with access to system mouse, keyboard, clipboard, screen. Also have adapter for nut.js testing framework.",
   "main": "./build/index",
   "types": "./build/index.d.ts",

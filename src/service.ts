@@ -1,5 +1,5 @@
 import type { Capabilities, Services, Options } from '@wdio/types';
-import { RobotConfig } from '..';
+import { RobotConfig } from '../index';
 import { RobotCommands } from './commands';
 import dns from 'dns';
 

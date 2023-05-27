@@ -1,8 +1,3 @@
-export interface IElement {
-  locator: string;
-  frames: Array<string>;
-}
-
 export interface ImageElement {
   pathToImage: string;
   pathToNestedImage?: string;
@@ -11,7 +6,7 @@ export interface ImageElement {
 export enum Button {
   LEFT = 0,
   MIDDLE = 1,
-  RIGHT = 2
+  RIGHT = 2,
 }
 
 export interface RobotDragAndDropType {

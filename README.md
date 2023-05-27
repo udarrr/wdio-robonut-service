@@ -13,19 +13,27 @@ npm install wdio-robonut-service
 ```typescript
 import RobotService from 'wdio-robonut-service';
 
-const robotConfig = {};
-
 // RobotConfig {
-//   mouseConfig?: MouseClass;
-//   screenConfig?: ScreenClass;
-//   keyboardConfig?: KeyboardClass;
-//   imageFinder?: CustomConfigType;
+//   mouseConfig?: {autoDelayMs: number; mouseSpeed: number};
+//   screenConfig?: {confidence: number; autoHighlight: boolean; highlightDurationMs: number; highlightOpacity: number; resourceDirectory:string};
+//   keyboardConfig?: {autoDelayMs: number};
+//   imageFinder?: {
+//     confidence?: number;
+//     searchMultipleScales?: boolean;
+//     customOptions?: {
+//         methodType?: MethodNameType;
+//         scaleSteps?: Array<number>;
+//         debug?: boolean;
+//         roi?: Region;
+//   };
 // }
 
+const robotConfig: RobotConfig = {};
+
 export const config: Options.Testrunner = {
-//------
+//-
 services: [[RobotService, robotConfig]],
-//------
+//-
 }
 ```
 
@@ -36,14 +44,22 @@ execute it wherever once after browser initialisation
 ```typescript
 import RobotCommands from 'wdio-robonut-service';
 
-const robotConfig = {};
-
 // RobotConfig {
-//   mouseConfig?: MouseClass;
-//   screenConfig?: ScreenClass;
-//   keyboardConfig?: KeyboardClass;
-//   imageFinder?: CustomConfigType;
+//   mouseConfig?: {autoDelayMs: number; mouseSpeed: number};
+//   screenConfig?: {confidence: number; autoHighlight: boolean; highlightDurationMs: number; highlightOpacity: number; resourceDirectory:string};
+//   keyboardConfig?: {autoDelayMs: number};
+//   imageFinder?: {
+//     confidence?: number;
+//     searchMultipleScales?: boolean;
+//     customOptions?: {
+//         methodType?: MethodNameType;
+//         scaleSteps?: Array<number>;
+//         debug?: boolean;
+//         roi?: Region;
+//   };
 // }
+
+const robotConfig: RobotConfig = {};
 
 new RobotCommands(browser, robotConfig)
 ```
@@ -57,18 +73,19 @@ async function dragAndDropImage(imageDrag: ImageElement,imageDrop: ImageElement,
 await (await browser.robot()).image.dragAndDrop(
 { pathToImage: imageDrag.pathToImage},
 { pathToImage: imageDrop.pathToImage}, 
-{ highLight: timeout , waitTimeout:timeout },);
+{ highLight: timeout/10 , waitTimeout:timeout });
 }
 
-async function dragAndDropImageWithNestedImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000) {
+async function dragAndDropImageWithNestedImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000 ) {
 await (await browser.robot()).image.dragAndDrop(
       { pathToImage: imageDrag.pathToImage, pathToNestedImage: imageDrag.pathToNestedImage },
       { pathToImage: imageDrop.pathToImage, pathToNestedImage: imageDrop.pathToNestedImage },
-      { highLight: timeout , waitTimeout:timeout },
+      { highLight: timeout/10 , waitTimeout:timeout },
     );
 }
 
-async function clickImage(image: ImageElement, timeout: number = 5000) {
+async function clickImage(image: ImageElement,  
+options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     await (await browser.robot()).image.waitForImageDisplayed(image, timeout);
     const location = await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage });
     const point = await (await browser.robot()).rect.centerOf(location.location);
@@ -76,7 +93,8 @@ async function clickImage(image: ImageElement, timeout: number = 5000) {
     await (await browser.robot()).mouse.click(Button.LEFT);
 }
 
-async function isWaitForImageDisplayed(image: ImageElement, timeout: number = 10000) {
+async function isWaitForImageDisplayed(image: ImageElement, 
+options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     try {
       return (await browser.waitUntil(
         async () => {
@@ -93,32 +111,33 @@ async function isWaitForImageDisplayed(image: ImageElement, timeout: number = 10
 ### API
 
 ```typescript
-robot: () => Promise<{
+      robot: () => Promise<{
         rect: {
           straightTo: (target: Point | Promise<Point>) => Promise<Point[]>;
           centerOf: (target: Region | Promise<Region>) => Promise<Point>;
           randomPointIn: (target: Region | Promise<Region>) => Promise<Point>;
         };
         image: {
-          clickImage: (image: ImageElement, timeout: number) => Promise<void>;
-          isWaitForImageDisplayed: (image: ImageElement, timeout: number) => Promise<boolean>;
-          waitForImageDisplayed: (image: ImageElement, timeout: number) => Promise<true | void>;
-          highlight: (image: ImageElement) => Promise<void>;
+          clickImage: (image: ImageElement, options: WaitUntilOptions) => Promise<void>;
+          isWaitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<boolean>;
+          waitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<true | void>;
+          highlightDisplayedImage: (image: ImageElement, options?: WaitUntilOptions & { highLight?: number }) => Promise<void>;
           dragAndDrop: (dragImage: ImageElement, dropImage: ImageElement, options?: RobotDragAndDropType) => Promise<void>;
         };
-        mouse: MouseProviderInterface;
-        screen: ScreenProviderInterface;
-        keyboard: KeyboardProviderInterface;
+        mouse: MouseClass;
+        screen: ScreenClass;
+        keyboard: KeyboardClass;
         windowApiProvider: WindowProviderInterface;
         clipboard: { sys: SysClipboard; virt: ClipboardClass };
         imageFinder: {
           finder: TemplateMatchingFinder;
-          image: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
+          reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
         };
       }>;
 ```
 
 ### Features
+
 - [x] Robot interfaces
 - [x] Image robot
 - [ ] Dom element robot (by locators)

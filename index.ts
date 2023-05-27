@@ -1,16 +1,15 @@
 import { KeyboardClass, MouseClass, ScreenClass, Image, ImageWriterParameters, ClipboardClass, Point, Region, WindowProviderInterface } from '@nut-tree/nut-js';
 import RobotService from './src/service';
-import type { KeyboardProviderInterface, MouseProviderInterface, ScreenProviderInterface } from '@nut-tree/nut-js';
 import { SysClipboard } from 'clipboard-sys';
 import { ImageElement } from './src/types';
 import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/template-matching-finder.class';
 import { RobotDragAndDropType } from './src/types';
 import { CustomConfigType } from '@udarrr/template-matcher/dist/lib/customTypes';
 import { RobotCommands } from './src/commands';
+import { WaitUntilOptions } from 'webdriverio';
 
 export default RobotService;
 export const launcher = RobotService;
-
 export { RobotCommands };
 
 export interface RobotConfig {
@@ -29,10 +28,10 @@ declare global {
           randomPointIn: (target: Region | Promise<Region>) => Promise<Point>;
         };
         image: {
-          clickImage: (image: ImageElement, timeout: number) => Promise<void>;
-          isWaitForImageDisplayed: (image: ImageElement, timeout: number) => Promise<boolean>;
-          waitForImageDisplayed: (image: ImageElement, timeout: number) => Promise<true | void>;
-          highlight: (image: ImageElement) => Promise<void>;
+          clickImage: (image: ImageElement, options: WaitUntilOptions) => Promise<void>;
+          isWaitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<boolean>;
+          waitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<true | void>;
+          highlightDisplayedImage: (image: ImageElement, options?: WaitUntilOptions & { highLight?: number }) => Promise<void>;
           dragAndDrop: (dragImage: ImageElement, dropImage: ImageElement, options?: RobotDragAndDropType) => Promise<void>;
         };
         mouse: MouseClass;
@@ -42,11 +41,10 @@ declare global {
         clipboard: { sys: SysClipboard; virt: ClipboardClass };
         imageFinder: {
           finder: TemplateMatchingFinder;
-          image: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
+          reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
         };
       }>;
     }
-
     interface ServiceOption extends RobotConfig {}
   }
 }

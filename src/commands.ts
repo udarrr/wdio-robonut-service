@@ -21,10 +21,11 @@ import {
 import { ImageElement } from './types';
 import finder from '@udarrr/template-matcher';
 import { RobotDragAndDropType } from './types';
-import { RobotConfig } from '..';
+import { RobotConfig } from '../index';
 import { Options } from '@wdio/types';
 import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/template-matching-finder.class';
 import * as sysClipboard from 'clipboard-sys';
+import { WaitUntilOptions } from 'webdriverio';
 
 export class RobotCommands {
   private screen: ScreenClass = screen;
@@ -69,40 +70,39 @@ export class RobotCommands {
     options.imageFinder?.customOptions?.scaleSteps ? this.finder.setConfig({ customOptions: { scaleSteps: options.imageFinder?.customOptions?.scaleSteps } }) : null;
   }
 
-  private async isWaitForImageDisplayed(image: ImageElement, timeout: number = 10000) {
+  private async isWaitForImageDisplayed(image: ImageElement, options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     try {
-      return (await this._browser.waitUntil(
-        async () => {
-          return !!(await this.finder.findMatch({ needle: image.pathToImage })).location.left;
-        },
-        { timeout, ...{ interval: 2500 } },
-      )) as true;
+      return (await this._browser.waitUntil(async () => {
+        return !!(await this.finder.findMatch({ needle: image.pathToImage })).location.left;
+      }, options)) as true;
     } catch {
       return false;
     }
   }
 
-  private async waitForImageDisplayed(image: ImageElement, timeout: number = 10000) {
-    return await this._browser.waitUntil(
-      async () => {
-        return !!(await this.finder.findMatch({ needle: image.pathToImage })).location.left;
-      },
-      { timeout, ...{ interval: 2500 } },
-    );
+  private async waitForImageDisplayed(image: ImageElement, options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
+    return await this._browser.waitUntil(async () => {
+      return !!(await this.finder.findMatch({ needle: image.pathToImage })).location.left;
+    }, options);
   }
 
-  private async clickImage(image: ImageElement, timeout: number = 5000) {
-    await this.waitForImageDisplayed(image, timeout);
+  private async clickImage(image: ImageElement, options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
+    await this.waitForImageDisplayed(image, options);
     const location = await this.finder.findMatch({ needle: image.pathToImage });
     const point = await centerOf(location.location);
     await this.mouse.move(straightTo(point));
     await this.mouse.click(Button.LEFT);
   }
 
-  private async highlightImage(image: ImageElement, timeout: number = 5000) {
-    await this.waitForImageDisplayed(image, timeout);
+  private async highlightDisplayedImage(image: ImageElement, options: WaitUntilOptions & { highLight?: number } = { interval: 2500, timeout: 10000 }) {
+    const tempHighLightDuration = this.screen.config.highlightDurationMs;
+    this.screen.config.highlightDurationMs = options?.highLight ? options.highLight : tempHighLightDuration;
+
+    await this.waitForImageDisplayed(image, options);
     let elementScreenRect = await this.finder.findMatch({ needle: image.pathToImage });
     await this.screen.highlight(elementScreenRect.location);
+
+    this.screen.config.highlightDurationMs = tempHighLightDuration;
   }
 
   private async dndImage(drag: ImageElement, drop: ImageElement, options?: RobotDragAndDropType) {
@@ -123,7 +123,7 @@ export class RobotCommands {
     this.screen.config.highlightDurationMs = options?.highLight ? options.highLight : tempHighLightDuration;
     this.screen.config.autoHighlight = false;
 
-    await this.waitForImageDisplayed(drag, imageTimeout);
+    await this.waitForImageDisplayed(drag, { timeout: imageTimeout, interval: 2500 });
     let dragRect = await this.finder.findMatch({ needle: drag.pathToImage });
 
     if (options && 'highLight' in options && options.highLight) {
@@ -149,7 +149,7 @@ export class RobotCommands {
     if (offsetY) {
       await this.mouse.move(straightTo(centerOf(new Region(dragRect.location.left, dragRect.location.top + offsetY, dragRect.location.width, dragRect.location.height))));
     }
-    await this.waitForImageDisplayed(drop, imageTimeout);
+    await this.waitForImageDisplayed(drop, { timeout: imageTimeout, interval: 2500 });
 
     let dropRect = await this.finder.findMatch({ needle: drop.pathToImage });
 
@@ -185,7 +185,7 @@ export class RobotCommands {
             clickImage: this.clickImage.bind(this),
             isWaitForImageDisplayed: this.isWaitForImageDisplayed.bind(this),
             waitForImageDisplayed: this.waitForImageDisplayed.bind(this),
-            highlight: this.highlightImage.bind(this),
+            highlightDisplayedImage: this.highlightDisplayedImage.bind(this),
             dragAndDrop: this.dndImage.bind(this),
           },
           mouse: this.mouse,
@@ -193,7 +193,7 @@ export class RobotCommands {
           keyboard: this.keyboard,
           windowApiProvider: this.windowApiProvider,
           clipboard: { sys: this.sysClipboard, virt: this.virtClipboard },
-          imageFinder: { finder: this.finder, image: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
+          imageFinder: { finder: this.finder, reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
         };
       });
     }
