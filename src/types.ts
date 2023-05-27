@@ -1,5 +1,3 @@
-import { Button } from '@nut-tree/nut-js';
-
 export interface IElement {
   locator: string;
   frames: Array<string>;
@@ -8,6 +6,12 @@ export interface IElement {
 export interface ImageElement {
   pathToImage: string;
   pathToNestedImage?: string;
+}
+
+export declare enum Button {
+  LEFT = 0,
+  MIDDLE = 1,
+  RIGHT = 2
 }
 
 export interface RobotDragAndDropType {

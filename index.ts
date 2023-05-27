@@ -35,9 +35,9 @@ declare global {
           highlight: (image: ImageElement) => Promise<void>;
           dragAndDrop: (dragImage: ImageElement, dropImage: ImageElement, options?: RobotDragAndDropType) => Promise<void>;
         };
-        mouse: MouseProviderInterface;
-        screen: ScreenProviderInterface;
-        keyboard: KeyboardProviderInterface;
+        mouse: MouseClass;
+        screen: ScreenClass;
+        keyboard: KeyboardClass;
         windowApiProvider: WindowProviderInterface;
         clipboard: { sys: SysClipboard; virt: ClipboardClass };
         imageFinder: {
