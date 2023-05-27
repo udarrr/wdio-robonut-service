@@ -4,11 +4,13 @@
 
 ### Description
 
-wdio-robonut-service is cross platform service with access to system mouse, keyboard, clipboard, screen and seeking image templates on visible screen. With the service possible perform move, click, type, check existing and obtaining coords of image template, drag and drop and so on.
+wdio-robonut-service is cross platform service with access to system mouse, keyboard, clipboard, screen and seeking image templates on visible screen. With the service possible perform system move, click, type and so on. Possible check being existed and obtaining coords of image template, drag and drop it and so on.
 
 ### Instalation
 
+```nodejs
 npm install wdio-robonut-service
+```
 
 ##### As service in wdio.conf.ts
 
