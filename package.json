@@ -42,7 +42,7 @@
     "build_tests": "npm run clean && tsc -p .",
     "selenium-standalone-install": "selenium-standalone install",
     "selenium-standalone-start": "powershell -Command \"Start-process cmd -ArgumentList \"/c\",\"selenium-standalone\",\"start\"\"",
-    "testPuppeteer": "npx wdio run ./test/wdio.conf.ts",
+    "testPuppeteer": "npx wdio run ./wdio.conf.ts",
     "testWebdriver": "npm run selenium-standalone-install && npm run selenium-standalone-start && npx wdio run ./wdio.conf.ts",
     "prepack": "node ./node_modules/clean-package/bin/clean-package.js --remove devDependencies peerDependencies scripts",
     "pack": "npm pack",
