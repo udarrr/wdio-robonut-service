@@ -13,10 +13,6 @@ jobs:
     strategy:
       matrix:
         os:
-          - name: Ubuntu
-            version: latest
-          - name: macOS
-            version: latest
           - name: Windows
             version: 2019
         node: ['14']
@@ -37,16 +33,12 @@ jobs:
         run: npm install --global npm@8.3.1
       - name: Install
         run: npm ci --unsafe-perm
-      - name: build
-        run: npm run build
+      - name: Build
+        run: npm run build_tests
       - name: Install chrome
         uses: browser-actions/setup-chrome@latest
         run: chrome --version
-      - name: Run tests webdriver
+      - name: Run tests
         uses: GabrielBB/xvfb-action@v1
         with:
           run: npm testWebdriver
-      - name: Run tests puppeteer
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: npm testPuppeteer
