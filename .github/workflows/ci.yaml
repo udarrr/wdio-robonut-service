@@ -15,7 +15,7 @@ jobs:
         os:
           - name: Windows
             version: 2019
-        node: ['14']
+        node: ['16']
         arch: [x64]
     steps:
       - name: Set up Git repository
@@ -42,4 +42,4 @@ jobs:
       - name: Run tests
         uses: GabrielBB/xvfb-action@v1
         with:
-          run: npm testWebdriver
+          run: npm run testWebdriver
