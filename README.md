@@ -69,7 +69,9 @@ new RobotCommands(browser, robotConfig)
 ### Usage, Examples
 
 ```typescript
-browser.robot()
+import { Button } from "wdio-robonut-service/build/src/types";
+
+browser.robot() //main point access
 
 async function dragAndDropImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000) {
 await (await browser.robot()).image.dragAndDrop(
@@ -88,7 +90,7 @@ await (await browser.robot()).image.dragAndDrop(
 
 async function clickImage(image: ImageElement,  
 options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
-    await (await browser.robot()).image.waitForImageDisplayed(image, timeout);
+    await (await browser.robot()).image.waitForImageDisplayed(image, options);
     const location = await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage });
     const point = await (await browser.robot()).rect.centerOf(location.location);
     await (await browser.robot()).mouse.move(await (await browser.robot()).rect.straightTo(point));
@@ -101,8 +103,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
       return (await browser.waitUntil(
         async () => {
           return !!(await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage })).location.left;
-        },
-        { timeout, ...{ interval: 2500 } },
+        }, options
       )) as true;
     } catch {
       return false;
