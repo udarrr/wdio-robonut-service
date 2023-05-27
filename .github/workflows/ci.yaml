@@ -37,7 +37,8 @@ jobs:
         run: npm run build_tests
       - name: Install chrome
         uses: browser-actions/setup-chrome@latest
-        run: chrome --version
+        with:
+          run: chrome --version
       - name: Run tests
         uses: GabrielBB/xvfb-action@v1
         with:

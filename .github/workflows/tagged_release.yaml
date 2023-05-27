@@ -32,12 +32,16 @@ jobs:
         run: npm install --global npm@8.3.1
       - name: Install
         run: npm ci --unsafe-perm
-      - name: Compile
-        run: npm run compile
+      - name: Build
+        run: npm run build_tests
+      - name: Install chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          run: chrome --version
       - name: Run tests
         uses: GabrielBB/xvfb-action@v1
         with:
-          run: npm test
+          run: npm testWebdriver
 
   deploy:
     needs:
