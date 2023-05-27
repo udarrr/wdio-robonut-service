@@ -1,8 +1,10 @@
 # wdio-robonut-service
 
+![image](READMELOGO.png)
+
 ### Description
 
-wdio-robonut-service is cross platform service with access to system mouse, keyboard, clipboard, screen.
+wdio-robonut-service is cross platform service with access to system mouse, keyboard, clipboard, screen and seeking image templates on visible screen. With the service possible perform move, click, type, check existing and obtaining coords of image template, drag and drop and so on.
 
 ### Instalation
 
@@ -141,3 +143,8 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
 - [x] Robot interfaces
 - [x] Image robot
 - [ ] Dom element robot (by locators)
+
+### Constraints
+
+- Working with visible display (not headless)
+- Working in one thread/instance;
