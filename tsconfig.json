@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "sourceMap": false,
+    "target": "es2019",
+    "module": "commonjs",
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false,
+    "skipLibCheck": true,
+    "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework"],
+    "declaration": true,
+    "declarationMap": true,
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "esModuleInterop": true
+  },
+  "include": ["test", "src/**/*.ts", "src/**/*.d.ts", "wdio.conf.ts", "index.ts"],
+  "exclude": ["./node_modules", "./build"]
+}
