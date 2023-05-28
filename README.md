@@ -1,4 +1,6 @@
 # wdio-robonut-service
+![Tested](https://github.com/udarrr/wdio-robonut-service/workflows/Tests/badge.svg)
+![Released](https://github.com/udarrr/wdio-robonut-service/workflows/Create%20tagged%20release/badge.svg)
 
 ![image](READMELOGO.png)
 
