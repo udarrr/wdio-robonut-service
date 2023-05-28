@@ -1,16 +1,16 @@
 import { KeyboardClass, MouseClass, ScreenClass, Image, ImageWriterParameters, ClipboardClass, Point, Region, WindowProviderInterface } from '@nut-tree/nut-js';
 import RobotService from './src/service';
 import { SysClipboard } from 'clipboard-sys';
-import { ImageElement } from './src/types';
+import { ImageElement, RobotDragAndDropType, Button, ScrollOptionsType } from './src/types';
 import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/template-matching-finder.class';
-import { RobotDragAndDropType } from './src/types';
 import { CustomConfigType } from '@udarrr/template-matcher/dist/lib/customTypes';
 import { RobotCommands } from './src/commands';
 import { WaitUntilOptions } from 'webdriverio';
+import { RobotDirect } from './src/direct';
 
 export default RobotService;
 export const launcher = RobotService;
-export { RobotCommands };
+export { ImageElement, RobotDragAndDropType, Button, ScrollOptionsType, RobotDirect, RobotCommands };
 
 export interface RobotConfig {
   mouseConfig?: Partial<MouseClass['config']>;

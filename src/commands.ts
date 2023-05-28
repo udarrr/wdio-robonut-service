@@ -28,25 +28,25 @@ import * as sysClipboard from 'clipboard-sys';
 import { WaitUntilOptions } from 'webdriverio';
 
 export class RobotCommands {
-  private screen: ScreenClass = screen;
+  protected screen: ScreenClass = screen;
 
-  private finder: TemplateMatchingFinder = finder;
+  protected finder: TemplateMatchingFinder = finder;
 
-  private mouse: MouseClass = mouse;
+  protected mouse: MouseClass = mouse;
 
-  private keyboard: KeyboardClass = keyboard;
+  protected keyboard: KeyboardClass = keyboard;
 
-  private sysClipboard: sysClipboard.SysClipboard = sysClipboard.clipboard;
+  protected sysClipboard: sysClipboard.SysClipboard = sysClipboard.clipboard;
 
-  private virtClipboard: ClipboardClass = clipboard;
+  protected virtClipboard: ClipboardClass = clipboard;
 
   private _browser: WebdriverIO.Browser;
 
-  private _config: (RobotConfig & Options.Testrunner) | RobotConfig;
+  protected _config: (RobotConfig & Options.Testrunner) | RobotConfig;
 
-  private windowApiProvider: WindowProviderInterface = providerRegistry.getWindow();
+  protected windowApiProvider: WindowProviderInterface = providerRegistry.getWindow();
 
-  constructor(browser: WebdriverIO.Browser, config: (RobotConfig & Options.Testrunner) | RobotConfig) {
+  constructor(browser: WebdriverIO.Browser | null, config: (RobotConfig & Options.Testrunner) | RobotConfig) {
     this._config = config;
     this._browser = browser;
 
@@ -73,7 +73,7 @@ export class RobotCommands {
   private async isWaitForImageDisplayed(image: ImageElement, options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     try {
       return (await this._browser.waitUntil(async () => {
-        return !!(await this.finder.findMatch({ needle: image.pathToImage })).location.left;
+        return !!(await this.finder.findMatch({ needle: image.pathToImage })).location;
       }, options)) as true;
     } catch {
       return false;
@@ -82,7 +82,7 @@ export class RobotCommands {
 
   private async waitForImageDisplayed(image: ImageElement, options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     return await this._browser.waitUntil(async () => {
-      return !!(await this.finder.findMatch({ needle: image.pathToImage })).location.left;
+      return !!(await this.finder.findMatch({ needle: image.pathToImage })).location;
     }, options);
   }
 

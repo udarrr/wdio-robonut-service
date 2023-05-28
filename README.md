@@ -12,25 +12,30 @@ wdio-robonut-service is cross platform service with access to system mouse, keyb
 npm install wdio-robonut-service
 ```
 
-##### As service in wdio.conf.ts
+##### Config
+
+```typescript
+interface RobotConfig {
+  mouseConfig?: { autoDelayMs: number; mouseSpeed: number };
+  screenConfig?: { confidence: number; autoHighlight: boolean; highlightDurationMs: number; highlightOpacity: number; resourceDirectory: string };
+  keyboardConfig?: { autoDelayMs: number };
+  imageFinder?: {
+    confidence?: number;
+    searchMultipleScales?: boolean;
+    customOptions?: {
+      methodType?: MethodNameType;
+      scaleSteps?: Array<number>;
+      debug?: boolean;
+      roi?: Region;
+    };
+  };
+}
+```
+
+##### Like wdio service in wdio.conf.ts
 
 ```typescript
 import RobotService from 'wdio-robonut-service';
-
-// RobotConfig {
-//   mouseConfig?: {autoDelayMs: number; mouseSpeed: number};
-//   screenConfig?: {confidence: number; autoHighlight: boolean; highlightDurationMs: number; highlightOpacity: number; resourceDirectory:string};
-//   keyboardConfig?: {autoDelayMs: number};
-//   imageFinder?: {
-//     confidence?: number;
-//     searchMultipleScales?: boolean;
-//     customOptions?: {
-//         methodType?: MethodNameType;
-//         scaleSteps?: Array<number>;
-//         debug?: boolean;
-//         roi?: Region;
-//   };
-// }
 
 const robotConfig: RobotConfig = {};
 
@@ -41,38 +46,29 @@ services: [[RobotService, robotConfig]],
 }
 ```
 
-##### As standalone
+##### For wdio standalone/remote
 
 execute it wherever once after browser initialisation
 
 ```typescript
 import RobotCommands from 'wdio-robonut-service';
 
-// RobotConfig {
-//   mouseConfig?: {autoDelayMs: number; mouseSpeed: number};
-//   screenConfig?: {confidence: number; autoHighlight: boolean; highlightDurationMs: number; highlightOpacity: number; resourceDirectory:string};
-//   keyboardConfig?: {autoDelayMs: number};
-//   imageFinder?: {
-//     confidence?: number;
-//     searchMultipleScales?: boolean;
-//     customOptions?: {
-//         methodType?: MethodNameType;
-//         scaleSteps?: Array<number>;
-//         debug?: boolean;
-//         roi?: Region;
-//   };
-// }
-
 const robotConfig: RobotConfig = {};
 
-new RobotCommands(browser, robotConfig)
+new RobotCommands(browser, robotConfig).addCommands()
+```
+
+##### Standalone
+
+```typescript
+const robotConfig: RobotConfig = {};
+
+new RobotDirect(robotConfig).instance()
 ```
 
 ### Usage, Examples
 
 ```typescript
-import { Button } from "wdio-robonut-service/build/src/types";
-
 browser.robot() //main point access
 
 async function dragAndDropImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000) {
@@ -104,7 +100,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     try {
       return (await browser.waitUntil(
         async () => {
-          return !!(await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage })).location.left;
+          return !!(await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage })).location;
         }, options
       )) as true;
     } catch {
