@@ -115,7 +115,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
 ### API
 
 ```typescript
-      robot: {
+      browser.robot: {
         rect: {
           straightTo: (target: Point | Promise<Point>) => Promise<Point[]>;
           centerOf: (target: Region | Promise<Region>) => Promise<Point>;
