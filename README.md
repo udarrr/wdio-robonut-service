@@ -1,4 +1,5 @@
 # wdio-robonut-service
+
 ![Tested](https://github.com/udarrr/wdio-robonut-service/workflows/Tests/badge.svg)
 ![Released](https://github.com/udarrr/wdio-robonut-service/workflows/Create%20tagged%20release/badge.svg)
 
@@ -74,14 +75,14 @@ new RobotDirect(robotConfig).instance()
 browser.robot() //main point access
 
 async function dragAndDropImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000) {
-await (await browser.robot()).image.dragAndDrop(
+await browser.robot.image.dragAndDrop(
 { pathToImage: imageDrag.pathToImage},
 { pathToImage: imageDrop.pathToImage}, 
 { highLight: timeout/10 , waitTimeout:timeout });
 }
 
 async function dragAndDropImageWithNestedImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000 ) {
-await (await browser.robot()).image.dragAndDrop(
+await browser.robot..image.dragAndDrop(
       { pathToImage: imageDrag.pathToImage, pathToNestedImage: imageDrag.pathToNestedImage },
       { pathToImage: imageDrop.pathToImage, pathToNestedImage: imageDrop.pathToNestedImage },
       { highLight: timeout/10 , waitTimeout:timeout },
@@ -90,11 +91,11 @@ await (await browser.robot()).image.dragAndDrop(
 
 async function clickImage(image: ImageElement,  
 options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
-    await (await browser.robot()).image.waitForImageDisplayed(image, options);
-    const location = await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage });
-    const point = await (await browser.robot()).rect.centerOf(location.location);
-    await (await browser.robot()).mouse.move(await (await browser.robot()).rect.straightTo(point));
-    await (await browser.robot()).mouse.click(Button.LEFT);
+    await browser.robot.image.waitForImageDisplayed(image, options);
+    const location = await browser.robot.imageFinder.finder.findMatch({ needle: image.pathToImage });
+    const point = await browser.robot.rect.centerOf(location.location);
+    await browser.robot.mouse.move(await browser.robot.rect.straightTo(point));
+    await browser.robot.mouse.click(Button.LEFT);
 }
 
 async function isWaitForImageDisplayed(image: ImageElement, 
@@ -102,7 +103,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     try {
       return (await browser.waitUntil(
         async () => {
-          return !!(await (await browser.robot()).imageFinder.finder.findMatch({ needle: image.pathToImage })).location;
+          return !!(await browser.robot.imageFinder.finder.findMatch({ needle: image.pathToImage })).location;
         }, options
       )) as true;
     } catch {
@@ -114,7 +115,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
 ### API
 
 ```typescript
-      robot: () => Promise<{
+      robot: {
         rect: {
           straightTo: (target: Point | Promise<Point>) => Promise<Point[]>;
           centerOf: (target: Region | Promise<Region>) => Promise<Point>;
@@ -136,7 +137,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
           finder: TemplateMatchingFinder;
           reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
         };
-      }>;
+      };
 ```
 
 ### Features

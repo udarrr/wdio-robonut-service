@@ -178,24 +178,22 @@ export class RobotCommands {
 
   addCommands() {
     if (this._browser) {
-      this._browser.addCommand('robot', async () => {
-        return {
-          rect: { straightTo: straightTo, centerOf: centerOf, randomPointIn: randomPointIn },
-          image: {
-            clickImage: this.clickImage.bind(this),
-            isWaitForImageDisplayed: this.isWaitForImageDisplayed.bind(this),
-            waitForImageDisplayed: this.waitForImageDisplayed.bind(this),
-            highlightDisplayedImage: this.highlightDisplayedImage.bind(this),
-            dragAndDrop: this.dndImage.bind(this),
-          },
-          mouse: this.mouse,
-          screen: this.screen,
-          keyboard: this.keyboard,
-          windowApiProvider: this.windowApiProvider,
-          clipboard: { sys: this.sysClipboard, virt: this.virtClipboard },
-          imageFinder: { finder: this.finder, reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
-        };
-      });
+      this._browser.robot = {
+        rect: { straightTo: straightTo, centerOf: centerOf, randomPointIn: randomPointIn },
+        image: {
+          clickImage: this.clickImage.bind(this),
+          isWaitForImageDisplayed: this.isWaitForImageDisplayed.bind(this),
+          waitForImageDisplayed: this.waitForImageDisplayed.bind(this),
+          highlightDisplayedImage: this.highlightDisplayedImage.bind(this),
+          dragAndDrop: this.dndImage.bind(this),
+        },
+        mouse: this.mouse,
+        screen: this.screen,
+        keyboard: this.keyboard,
+        windowApiProvider: this.windowApiProvider,
+        clipboard: { sys: this.sysClipboard, virt: this.virtClipboard },
+        imageFinder: { finder: this.finder, reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
+      };
     }
   }
 }

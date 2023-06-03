@@ -21,7 +21,7 @@ export interface RobotConfig {
 declare global {
   namespace WebdriverIO {
     interface Browser {
-      robot: () => Promise<{
+      robot: {
         rect: {
           straightTo: (target: Point | Promise<Point>) => Promise<Point[]>;
           centerOf: (target: Region | Promise<Region>) => Promise<Point>;
@@ -43,7 +43,7 @@ declare global {
           finder: TemplateMatchingFinder;
           reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
         };
-      }>;
+      };
     }
     interface ServiceOption extends RobotConfig {}
   }
