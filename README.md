@@ -7,7 +7,7 @@
 
 ### Description
 
-wdio-robonut-service is cross platform (win32, darwin, linux) service with access to system mouse, keyboard, clipboard, screen and seeking image templates on visible screen. With the service possible perform system move, click, copy, past, type and so on. Possible check being existed and obtaining coords of image template, drag and drop it and so on.
+wdio-robonut-service is cross platform (windows, darwin, linux) service with access to system mouse, keyboard, clipboard, screen and seeking image templates on visible screen. With the service possible perform system move, click, copy, past, type and so on. Possible check being existed and obtaining coords of image template, drag and drop it and so on.
 
 ### Instalation
 
