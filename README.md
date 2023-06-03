@@ -69,11 +69,17 @@ const robotConfig: RobotConfig = {};
 new RobotDirect(robotConfig).instance()
 ```
 
-### Usage, Examples
+### Usage
+
+##### Main point access
 
 ```typescript
-browser.robot() //main point access
+browser.robot
+```
 
+##### Examples
+
+```typescript
 async function dragAndDropImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000) {
 await browser.robot.image.dragAndDrop(
 { pathToImage: imageDrag.pathToImage},
@@ -115,7 +121,8 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
 ### API
 
 ```typescript
-      browser.robot: {
+    interface Browser {
+      robot: {
         rect: {
           straightTo: (target: Point | Promise<Point>) => Promise<Point[]>;
           centerOf: (target: Region | Promise<Region>) => Promise<Point>;
@@ -138,6 +145,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
           reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
         };
       };
+    }
 ```
 
 ### Features
