@@ -82,7 +82,7 @@ await browser.robot.image.dragAndDrop(
 }
 
 async function dragAndDropImageWithNestedImage(imageDrag: ImageElement,imageDrop: ImageElement, timeout: number = 10000 ) {
-await browser.robot..image.dragAndDrop(
+await browser.robot.image.dragAndDrop(
       { pathToImage: imageDrag.pathToImage, pathToNestedImage: imageDrag.pathToNestedImage },
       { pathToImage: imageDrop.pathToImage, pathToNestedImage: imageDrop.pathToNestedImage },
       { highLight: timeout/10 , waitTimeout:timeout },
