@@ -3,7 +3,7 @@
 ![Tested](https://github.com/udarrr/wdio-robonut-service/workflows/Tests/badge.svg)
 ![Released](https://github.com/udarrr/wdio-robonut-service/workflows/Create%20tagged%20release/badge.svg)
 
-![image](READMELOGO.png)
+![image](https://raw.githubusercontent.com/udarrr/wdio-robonut-service/HEAD/READMELOGO.png)
 
 ### Description
 
@@ -98,7 +98,7 @@ await browser.robot.image.dragAndDrop(
 async function clickImage(image: ImageElement,  
 options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     await browser.robot.image.waitForImageDisplayed(image, options);
-    const location = await browser.robot.imageFinder.finder.findMatch({ needle: image.pathToImage });
+    const location = await browser.robot.image.finder.findMatch({ needle: image.pathToImage });
     const point = await browser.robot.rect.centerOf(location.location);
     await browser.robot.mouse.move(await browser.robot.rect.straightTo(point));
     await browser.robot.mouse.click(Button.LEFT);
@@ -109,7 +109,7 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
     try {
       return (await browser.waitUntil(
         async () => {
-          return !!(await browser.robot.imageFinder.finder.findMatch({ needle: image.pathToImage })).location;
+          return !!(await browser.robot.image.finder.findMatch({ needle: image.pathToImage })).location;
         }, options
       )) as true;
     } catch {
@@ -129,6 +129,8 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
           randomPointIn: (target: Region | Promise<Region>) => Promise<Point>;
         };
         image: {
+          finder: TemplateMatchingFinder;
+          reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
           clickImage: (image: ImageElement, options: WaitUntilOptions) => Promise<void>;
           isWaitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<boolean>;
           waitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<true | void>;
@@ -140,10 +142,6 @@ options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
         keyboard: KeyboardClass;
         windowApiProvider: WindowProviderInterface;
         clipboard: { sys: SysClipboard; virt: ClipboardClass };
-        imageFinder: {
-          finder: TemplateMatchingFinder;
-          reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
-        };
       };
     }
 ```

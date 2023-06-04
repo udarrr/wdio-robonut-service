@@ -15,7 +15,7 @@ export class RobotDirect extends RobotCommands {
       keyboard: this.keyboard,
       windowApiProvider: this.windowApiProvider,
       clipboard: { sys: this.sysClipboard, virt: this.virtClipboard },
-      imageFinder: { finder: this.finder, reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
+      image: { finder: this.finder, reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
     };
   }
 

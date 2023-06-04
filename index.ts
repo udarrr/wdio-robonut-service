@@ -28,6 +28,8 @@ declare global {
           randomPointIn: (target: Region | Promise<Region>) => Promise<Point>;
         };
         image: {
+          finder: TemplateMatchingFinder;
+          reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
           clickImage: (image: ImageElement, options: WaitUntilOptions) => Promise<void>;
           isWaitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<boolean>;
           waitForImageDisplayed: (image: ImageElement, options?: WaitUntilOptions) => Promise<true | void>;
@@ -39,10 +41,6 @@ declare global {
         keyboard: KeyboardClass;
         windowApiProvider: WindowProviderInterface;
         clipboard: { sys: SysClipboard; virt: ClipboardClass };
-        imageFinder: {
-          finder: TemplateMatchingFinder;
-          reader: { imageResource: (fileName: string) => Promise<Image>; loadImage: (parameters: string) => Promise<Image>; saveImage: (parameters: ImageWriterParameters) => Promise<void> };
-        };
       };
     }
     interface ServiceOption extends RobotConfig {}

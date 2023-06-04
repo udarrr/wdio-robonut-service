@@ -181,6 +181,8 @@ export class RobotCommands {
       const robot = {
         rect: { straightTo: straightTo, centerOf: centerOf, randomPointIn: randomPointIn },
         image: {
+          finder: this.finder,
+          reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage },
           clickImage: this.clickImage.bind(this),
           isWaitForImageDisplayed: this.isWaitForImageDisplayed.bind(this),
           waitForImageDisplayed: this.waitForImageDisplayed.bind(this),
@@ -192,7 +194,6 @@ export class RobotCommands {
         keyboard: this.keyboard,
         windowApiProvider: this.windowApiProvider,
         clipboard: { sys: this.sysClipboard, virt: this.virtClipboard },
-        imageFinder: { finder: this.finder, reader: { imageResource: imageResource, loadImage: loadImage, saveImage: saveImage } },
       };
       if (!Reflect.defineProperty(this._browser, 'robot', { value: robot, writable: false, configurable: false, enumerable: true })) {
         console.log("Robot service haven't been connecting");
