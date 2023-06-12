@@ -2,8 +2,8 @@ import { KeyboardClass, MouseClass, ScreenClass, Image, ImageWriterParameters, C
 import RobotService from './src/service';
 import { SysClipboard } from 'clipboard-sys';
 import { ImageElement, RobotDragAndDropType, Button, ScrollOptionsType } from './src/types';
-import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/template-matching-finder.class';
-import { CustomConfigType } from '@udarrr/template-matcher/dist/lib/customTypes';
+import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/templateMatchingFinder';
+import { CustomConfigType } from '@udarrr/template-matcher/dist/lib/types';
 import { RobotCommands } from './src/commands';
 import { WaitUntilOptions } from 'webdriverio';
 import { RobotDirect } from './src/direct';

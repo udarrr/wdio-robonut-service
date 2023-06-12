@@ -23,7 +23,7 @@ import finder from '@udarrr/template-matcher';
 import { RobotDragAndDropType } from './types';
 import { RobotConfig } from '../index';
 import { Options } from '@wdio/types';
-import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/template-matching-finder.class';
+import TemplateMatchingFinder from '@udarrr/template-matcher/dist/lib/templateMatchingFinder';
 import * as sysClipboard from 'clipboard-sys';
 import { WaitUntilOptions } from 'webdriverio';
 
@@ -64,10 +64,10 @@ export class RobotCommands {
     this.keyboard.config.autoDelayMs = options && options.keyboardConfig?.autoDelayMs ? options.keyboardConfig.autoDelayMs : this.keyboard.config.autoDelayMs;
 
     options.imageFinder?.confidence ? this.finder.setConfig({ confidence: options.imageFinder?.confidence }) : null;
-    options.imageFinder?.searchMultipleScales ? this.finder.setConfig({ searchMultipleScales: options.imageFinder?.searchMultipleScales }) : null;
-    options.imageFinder?.customOptions?.debug ? this.finder.setConfig({ customOptions: { debug: options.imageFinder?.customOptions?.debug } }) : null;
-    options.imageFinder?.customOptions?.methodType ? this.finder.setConfig({ customOptions: { methodType: options.imageFinder?.customOptions.methodType } }) : null;
-    options.imageFinder?.customOptions?.scaleSteps ? this.finder.setConfig({ customOptions: { scaleSteps: options.imageFinder?.customOptions?.scaleSteps } }) : null;
+    options.imageFinder?.providerData?.searchMultipleScales ? this.finder.setConfig({ providerData: { searchMultipleScales: options.imageFinder?.providerData?.searchMultipleScales } }) : null;
+    options.imageFinder?.providerData?.debug ? this.finder.setConfig({ providerData: { debug: options.imageFinder?.providerData?.debug } }) : null;
+    options.imageFinder?.providerData?.methodType ? this.finder.setConfig({ providerData: { methodType: options.imageFinder?.providerData.methodType } }) : null;
+    options.imageFinder?.providerData?.scaleSteps ? this.finder.setConfig({ providerData: { scaleSteps: options.imageFinder?.providerData?.scaleSteps } }) : null;
   }
 
   private async isWaitForImageDisplayed(image: ImageElement, options: WaitUntilOptions = { interval: 2500, timeout: 10000 }) {
@@ -131,7 +131,7 @@ export class RobotCommands {
     }
 
     if ('pathToNestedImage' in drag && drag.pathToNestedImage) {
-      let nestedDragRect = await this.finder.findMatch({ needle: drag.pathToNestedImage, customOptions: { roi: dragRect.location } });
+      let nestedDragRect = await this.finder.findMatch({ needle: drag.pathToNestedImage, providerData: { roi: dragRect.location } });
 
       if (options && 'highLight' in options && options.highLight) {
         await this.screen.highlight(nestedDragRect.location);
@@ -158,7 +158,7 @@ export class RobotCommands {
     }
 
     if ('pathToNestedImage' in drag && drag.pathToNestedImage) {
-      let nestedDropRect = await this.finder.findMatch({ needle: drop.pathToNestedImage, customOptions: { roi: dropRect.location } });
+      let nestedDropRect = await this.finder.findMatch({ needle: drop.pathToNestedImage, providerData: { roi: dropRect.location } });
 
       if (options && 'highLight' in options && options.highLight) {
         await this.screen.highlight(nestedDropRect.location);

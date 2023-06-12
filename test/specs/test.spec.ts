@@ -1,6 +1,6 @@
-const TIMEOUT = 500;
-
 describe('Drag and drop by image', () => {
+  const TIMEOUT = 500;
+
   it('Opera dnd test image', async () => {
     await browser.url('https://dev.opera.com/articles/accessible-drag-and-drop/example.html');
     await browser.robot.image.dragAndDrop({ pathToImage: `./test/specs/pic/opera1.png` }, { pathToImage: `./test/specs/pic/opera2.png` }, { highLight: TIMEOUT });
