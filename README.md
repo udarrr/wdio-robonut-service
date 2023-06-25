@@ -24,10 +24,12 @@ interface RobotConfig {
   keyboardConfig?: { autoDelayMs: number };
   imageFinder?: {
     confidence?: number;
-    searchMultipleScales?: boolean;
-    customOptions?: {
+    providerData?: {
       methodType?: MethodNameType;
       scaleSteps?: Array<number>;
+      searchMultipleScales?: boolean;
+      isRotation: boolean,
+      rotationOption?: { range?: number; overLap?: number; minDstLength?: number };
       debug?: boolean;
       roi?: Region;
     };
