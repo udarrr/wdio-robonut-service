@@ -1,6 +1,6 @@
 {
   "name": "wdio-robonut-service",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Robot WebdriverIO cross platform service with access to system mouse, keyboard, clipboard, screen. Also have adapter for nut.js testing framework.",
   "main": "./build/index",
   "types": "./build/index.d.ts",
@@ -51,7 +51,7 @@
     "publish_package": "npm publish --tag latest --access=public"
   },
   "dependencies": {
-    "@udarrr/template-matcher": "^4.5.2",
+    "@udarrr/template-matcher": "^4.6.2",
     "clipboard-sys": "^1.2.1"
   },
   "devDependencies": {
@@ -60,7 +60,6 @@
     "@wdio/cli": "^8.10.5",
     "@wdio/local-runner": "^8.10.5",
     "@wdio/mocha-framework": "^8.10.4",
-    "@wdio/selenium-standalone-service": "^8.10.4",
     "@wdio/spec-reporter": "^8.10.5",
     "@wdio/types": "^8.10.4",
     "clean-package": "^1.0.1",
