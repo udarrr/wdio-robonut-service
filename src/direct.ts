@@ -1,4 +1,4 @@
-import { straightTo, centerOf, randomPointIn, imageResource, loadImage, saveImage } from '@nut-tree/nut-js';
+import { straightTo, centerOf, randomPointIn, imageResource, loadImage, saveImage } from '@nut-tree-fork/nut-js';
 import { RobotCommands, RobotConfig } from '../index';
 import { Options } from '@wdio/types';
 

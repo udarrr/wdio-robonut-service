@@ -17,7 +17,7 @@ import {
   WindowProviderInterface,
   randomPointIn,
   ClipboardClass,
-} from '@nut-tree/nut-js';
+} from '@nut-tree-fork/nut-js';
 import { ImageElement } from './types';
 import finder from '@udarrr/template-matcher';
 import { RobotDragAndDropType } from './types';
